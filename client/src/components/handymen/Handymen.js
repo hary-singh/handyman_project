@@ -1,52 +1,63 @@
-import { useState, useEffect } from 'react';
-import { Button, Card, Image } from 'semantic-ui-react'
-import Elliot from '../images/elliot.jpg';
+import { Component } from 'react';
+import HandymanForm from './HandymanForm';
+import HandymanList from './HandymanList';
 import axios from 'axios';
-const Handymen = () => {
-  
-  const [handymen, setHandymen] = useState([])
-  useEffect( () => {
-    axios.get("/api/handymen")
-      .then( res => {
-        setHandymen(res.data)
-      })
-      .catch( err => console.log(err) )
-  }, [])
-
-  const addHandyman = (handyman) => {
-    axios.post("/api/handymen", { handyman })
-      .then( res => {
-        setHandymen([...handymen, res.data])
-      })
-      .catch( err => console.log(err) )
+class Handymen extends Component{
+  state = { handymen: [] }
+  componentDidMount(){
+    axios.get('/api/handymen')
+    .then(res => {
+      this.setState({ handymen: res.data })
+    })
+    .catch( err => console.log(err))
   }
 
-  return (
-    <>
-      <h1>All the Handymen shown Below:</h1>
-        <Card.Group>
-        { handymen.map( b => 
-          <Card>
-            <Card.Content>
-            <Image
-              floated='right'
-              size='mini'
-              src={Elliot}
-            />
-              <Card.Header>{b.title}</Card.Header>
-              <Card.Description>{b.specialty}</Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <div className='ui two buttons'>
-                <Button basic color='green'>
-                  View Details
-                </Button>
-              </div>
-            </Card.Content>
-          </Card>  
-        )}
-        </Card.Group>
-    </>
-  )
+  addHandyman = ( handyman ) => {
+    axios.post('/api/handymen', { handyman })
+    .then( res => {
+      const { handymen } = this.state
+      this.setState({ handymen: [...handymen, res.data] })
+    })
+    .catch( err => console.log(err))
+  }
+
+  updateHandyman = (id, handyman ) => {
+    axios.put(`/api/handymen/${id}`, { handyman })
+    .then( res => {
+      const handymen = this.state.handymen.map( h => {
+        if(h.id === id){
+          return res.data
+        }
+        return h
+      })
+      this.setState({handymen})
+    })
+    .catch(err => console.log(err))
+  }
+
+  deleteHandyman = (id) => {
+    axios.delete(`/api/handymen/${id}`)
+    .then( res => {
+      const { handymen } = this.state
+      this.setState({ handymen: handymen.filter( h => h.id !== id)})
+      alert(res.data.message)
+    })
+    .catch( err => console.log(err))
+  }
+
+  render(){
+    const { handymen } = this.state
+    return(
+      <>
+        <h1> Handyman List </h1>
+        <HandymanForm addHandyman={this.addHandyman}/>
+        <HandymanList
+          handymen={handymen}
+          deleteHandyman={this.deleteHandyman}
+          updateHandyman={this.updateHandyman}
+          />
+      </>
+    )}
+
 }
 export default Handymen;
