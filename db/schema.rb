@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_26_013340) do
+ActiveRecord::Schema.define(version: 2021_03_26_023459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.string "rating"
+    t.bigint "service_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["service_id"], name: "index_comments_on_service_id"
+  end
 
   create_table "handymen", force: :cascade do |t|
     t.string "title"
@@ -23,4 +33,18 @@ ActiveRecord::Schema.define(version: 2021_03_26_013340) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "services", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.bigint "handymen_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "handyman_id", null: false
+    t.index ["handyman_id"], name: "index_services_on_handyman_id"
+    t.index ["handymen_id"], name: "index_services_on_handymen_id"
+  end
+
+  add_foreign_key "comments", "services"
+  add_foreign_key "services", "handymen"
+  add_foreign_key "services", "handymen", column: "handymen_id"
 end
