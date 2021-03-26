@@ -15,6 +15,7 @@ class Handyman extends Component{
       <>
         <h1> Title : {title} </h1>
         <h3> Specialty : {specialty}</h3>
+        <button> View Services </button>
         {
           editing? 
             <HandymanForm 
