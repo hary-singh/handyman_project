@@ -1,14 +1,17 @@
 import Handyman from './Handyman';
+import { Card } from 'semantic-ui-react';
 const HandymanList = ({ handymen, deleteHandyman, updateHandyman}) => {
   return(
     <>
       { handymen.map(h =>
-        <Handyman
-        key={h.id}
-        {...h}
-        deleteHandyman={deleteHandyman}
-        updateHandyman={updateHandyman}
-        />
+        <div className="ui cards">
+          <Handyman
+            key={h.id}
+            {...h}
+            deleteHandyman={deleteHandyman}
+            updateHandyman={updateHandyman}
+          />
+        </div>
         )} 
     </>
   )

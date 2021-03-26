@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import HandymanForm from './HandymanForm';
+import {Button, Card, CardContent, Image} from 'semantic-ui-react';
+import Elliot from '../images/elliot.jpg';
 class Handyman extends Component{
   state = { editing: false }
   
@@ -13,9 +15,6 @@ class Handyman extends Component{
     const { id, title, specialty, deleteHandyman } = this.props
     return(
       <>
-        <h1> Title : {title} </h1>
-        <h3> Specialty : {specialty}</h3>
-        <button> View Services </button>
         {
           editing? 
             <HandymanForm 
@@ -23,10 +22,21 @@ class Handyman extends Component{
               toggleForm={this.toggleForm}
             />
           :
-          <button onClick={()=> this.toggleForm()}> Edit </button>
-        }
-        <button onClick={()=> deleteHandyman(id)}> Delete </button>
-
+          <Card>
+            <CardContent>
+              <Image floated="right" size="mini" src={Elliot} />
+              <Card.Header>{title}</Card.Header>
+              <Card.Meta>{specialty}</Card.Meta>
+            </CardContent>
+            <CardContent extra>
+              <div className="ui three buttons">
+                <Button basic color="green"> View Services </Button>
+                <Button basic color="green" onClick={()=> this.toggleForm()}> Edit </Button>
+                <Button basic color="red" onClick={()=> deleteHandyman(id)}> Delete </Button>
+              </div>
+            </CardContent>
+          </Card>
+          }
       </>
     )
   }

@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Button, Form, FormGroup, Input } from 'semantic-ui-react'
 
 class HandymanForm extends Component{
   state = { title:"", specialty:"", editing: false }
@@ -32,8 +33,10 @@ class HandymanForm extends Component{
   render(){
     const { title, specialty } = this.state
     return(
-      <form onSubmit={this.handleSubmit}>
-        <input
+      <Form onSubmit={this.handleSubmit}>
+        <FormGroup widths="equal">
+        <Form.Field
+          control={Input}
           type="text"
           name="title"
           value={title}
@@ -41,7 +44,8 @@ class HandymanForm extends Component{
           required
           placeholder="Name"
         />
-        <input
+        <Form.Field
+          control={Input}
           type="text"
           name="specialty"
           value={specialty}
@@ -49,8 +53,9 @@ class HandymanForm extends Component{
           required
           placeholder="Specialty"
         />
-        <button type="submit">Submit</button>
-      </form>
+        <Form.Field control={Button} type="submit">Submit</Form.Field>
+        </FormGroup>
+      </Form>
     )
   }
 }
