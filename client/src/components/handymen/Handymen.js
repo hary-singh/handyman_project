@@ -50,7 +50,7 @@ class Handymen extends Component{
     const { handymen } = this.state
     return(
       <Container textAlign="center">
-        <h1> Handyman List </h1>
+        <Header as="h1" size="huge"> Handyman List </Header>
         <Divider horizontal>
           <Header>
             <Icon name='user circle' />
