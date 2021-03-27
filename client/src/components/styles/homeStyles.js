@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from 'semantic-ui-react';
+import {Button} from 'semantic-ui-react';
 const HomeTitle = styled.h1`
   background: linear-gradient(to bottom right, purple, grey);
   color: white;
@@ -12,6 +12,11 @@ export const HomeBody = styled.p`
   border: 1px solid;
   font-family: century gothic;
   font-size: 17px;
+`
+export const MyButton = styled(Button)`
+border-radius: 25px !important;  
+color: purple !important;
+
 `
 
 
