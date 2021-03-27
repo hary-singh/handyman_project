@@ -2,6 +2,7 @@ import { Component } from 'react';
 import HandymanForm from './HandymanForm';
 import HandymanList from './HandymanList';
 import axios from 'axios';
+import { Container, Divider, Icon, Header } from 'semantic-ui-react';
 class Handymen extends Component{
   state = { handymen: [] }
   componentDidMount(){
@@ -48,15 +49,27 @@ class Handymen extends Component{
   render(){
     const { handymen } = this.state
     return(
-      <>
+      <Container textAlign="center">
         <h1> Handyman List </h1>
+        <Divider horizontal>
+          <Header>
+            <Icon name='user circle' />
+            Add a new Handyman
+          </Header>
+        </Divider>
         <HandymanForm addHandyman={this.addHandyman}/>
+        <Divider horizontal>
+          <Header>
+            <Icon name='group' />
+              Available Handymen
+          </Header>
+        </Divider>
         <HandymanList
           handymen={handymen}
           deleteHandyman={this.deleteHandyman}
           updateHandyman={this.updateHandyman}
           />
-      </>
+      </Container>
     )}
 
 }
